@@ -23,32 +23,24 @@ struct PostProcess {
     }
 
     mutating func postProcess(view: MTKView, commandBuffer: MTLCommandBuffer) {
+        
+        var weight : Float = 0.1
         guard
             let drawableTexture = view.currentDrawable?.texture else { return }
         
-        let brightness = MPSImageThresholdToZero(
+        let convolution = MPSImageConvolution(
             device: Renderer.device,
-            thresholdValue: 0.5,
-            linearGrayColorTransform: nil
-        )
+            kernelWidth: 11,
+            kernelHeight: 1,
+            weights: &weight
+            )
 
-        brightness.encode(
+        convolution.encode(
             commandBuffer: commandBuffer,
             sourceTexture: drawableTexture,
             destinationTexture: texture
         )
         
-        let blur = MPSImageGaussianBlur(
-            device: Renderer.device,
-            sigma: 9.0
-        )
-
-        blur.encode(
-            commandBuffer: commandBuffer,
-            inPlaceTexture: &texture,
-            fallbackCopyAllocator: nil
-        )
-
         finalTexture = texture
         guard let blitEncoder = commandBuffer.makeBlitCommandEncoder()
         else { return }
