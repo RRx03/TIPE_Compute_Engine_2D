@@ -69,10 +69,10 @@
 			children = (
 				26AE85EB2A9DEFEF0064F69F /* CommonVariables.swift */,
 				26AE85EC2A9DEFEF0064F69F /* Common.h */,
+				26AE85F52A9DEFEF0064F69F /* Main */,
 				26AE85ED2A9DEFEF0064F69F /* Maths */,
 				26AE85EF2A9DEFEF0064F69F /* Shader */,
 				26AE85F12A9DEFEF0064F69F /* Application */,
-				26AE85F52A9DEFEF0064F69F /* Main */,
 				26AE85F72A9DEFEF0064F69F /* Protocols */,
 				26AE85DD2A9DEFA10064F69F /* Assets.xcassets */,
 				26AE85E22A9DEFA10064F69F /* TIPE_Compute_Engine_2D.entitlements */,

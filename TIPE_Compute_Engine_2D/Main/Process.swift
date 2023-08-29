@@ -8,7 +8,7 @@ struct Process {}
 struct PostProcess {
     var texture: MTLTexture!
     var finalTexture: MTLTexture!
-    
+
     var textureDescriptor: MTLTextureDescriptor!
 
     mutating func initVal() {
@@ -24,26 +24,31 @@ struct PostProcess {
 
     mutating func postProcess(view: MTKView, commandBuffer: MTLCommandBuffer) {
         guard
-            let drawableTexture =
-            view.currentDrawable?.texture else { return }
+            let drawableTexture = view.currentDrawable?.texture else { return }
+        
         let brightness = MPSImageThresholdToZero(
             device: Renderer.device,
             thresholdValue: 0.5,
-            linearGrayColorTransform: nil)
-        brightness.label = "MPS brightness"
+            linearGrayColorTransform: nil
+        )
+
         brightness.encode(
             commandBuffer: commandBuffer,
             sourceTexture: drawableTexture,
-            destinationTexture: texture)
-        let blur = MPSImageGaussianBlur(
-          device: Renderer.device,
-          sigma: 9.0)
-        blur.label = "MPS blur"
-        blur.encode(
-          commandBuffer: commandBuffer,
-          inPlaceTexture: &texture,
-          fallbackCopyAllocator: nil)
+            destinationTexture: texture
+        )
         
+        let blur = MPSImageGaussianBlur(
+            device: Renderer.device,
+            sigma: 9.0
+        )
+
+        blur.encode(
+            commandBuffer: commandBuffer,
+            inPlaceTexture: &texture,
+            fallbackCopyAllocator: nil
+        )
+
         finalTexture = texture
         guard let blitEncoder = commandBuffer.makeBlitCommandEncoder()
         else { return }
@@ -51,7 +56,8 @@ struct PostProcess {
         let size = MTLSize(
             width: drawableTexture.width,
             height: drawableTexture.height,
-            depth: 1)
+            depth: 1
+        )
         blitEncoder.copy(
             from: finalTexture,
             sourceSlice: 0,
@@ -61,8 +67,9 @@ struct PostProcess {
             to: drawableTexture,
             destinationSlice: 0,
             destinationLevel: 0,
-            destinationOrigin: origin)
-        
+            destinationOrigin: origin
+        )
+
         blitEncoder.endEncoding()
     }
 }
