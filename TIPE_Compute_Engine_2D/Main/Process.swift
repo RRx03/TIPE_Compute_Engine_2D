@@ -35,6 +35,14 @@ struct PostProcess {
             commandBuffer: commandBuffer,
             sourceTexture: drawableTexture,
             destinationTexture: texture)
+        let blur = MPSImageGaussianBlur(
+          device: Renderer.device,
+          sigma: 9.0)
+        blur.label = "MPS blur"
+        blur.encode(
+          commandBuffer: commandBuffer,
+          inPlaceTexture: &texture,
+          fallbackCopyAllocator: nil)
         
         finalTexture = texture
         guard let blitEncoder = commandBuffer.makeBlitCommandEncoder()
