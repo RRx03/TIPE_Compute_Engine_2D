@@ -15,6 +15,8 @@ class Renderer: NSObject {
     
     var postProcess = PostProcess()
     
+    
+    var show = true
 
     
     
@@ -31,6 +33,7 @@ class Renderer: NSObject {
         Renderer.commandQueue = commandQueue
         metalView.device = device
         metalView.framebufferOnly = false
+        
         
         
         super.init()
@@ -67,7 +70,7 @@ extension Renderer: MTKViewDelegate {
         lastTime = currentTime
         
         uniforms.deltaTime = deltaTime
-        uniforms.time += 0.001
+        uniforms.time += 1
         
         var threadsPerGrid: MTLSize
         var threadsPerThreadgroup: MTLSize
@@ -84,7 +87,17 @@ extension Renderer: MTKViewDelegate {
         computeEncoder.dispatchThreads(threadsPerGrid, threadsPerThreadgroup: threadsPerThreadgroup)
         computeEncoder.endEncoding()
         
-        postProcess.postProcess(view: view, commandBuffer: commandBuffer)
+        
+        if (Int(uniforms.time)%10 == 0){
+            show = !show;
+        }
+        
+        if (show){
+            
+                postProcess.postProcess(view: view, commandBuffer: commandBuffer)
+
+            
+        }
         
         commandBuffer.present(drawable)
         commandBuffer.commit()

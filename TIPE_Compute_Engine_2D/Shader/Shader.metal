@@ -79,7 +79,8 @@ kernel void draw(texture2d<float, access::read> drawableIn [[texture(0)]],
 {
     device uint *state = &randomState[0];
     *state = textureID.x + drawableOut.get_width()*textureID.y;
-    drawableOut.write(float4(noise(textureID, state, float2(drawableOut.get_width(), drawableOut.get_height()), uint2(10, 10))), textureID);
+    float3 rgValues = float3(noise(textureID, state, float2(drawableOut.get_width(), drawableOut.get_height()), uint2(10, 10)));
+    drawableOut.write(float4(rgValues, 1), textureID);
     
     
     

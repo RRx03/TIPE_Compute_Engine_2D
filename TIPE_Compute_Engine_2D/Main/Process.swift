@@ -24,13 +24,13 @@ struct PostProcess {
 
     mutating func postProcess(view: MTKView, commandBuffer: MTLCommandBuffer) {
         
-        var weight : Float = 0.1
+        var weight : [Float] = [-0.5, 0, 0.5]
         guard
             let drawableTexture = view.currentDrawable?.texture else { return }
         
         let convolution = MPSImageConvolution(
             device: Renderer.device,
-            kernelWidth: 11,
+            kernelWidth: 3,
             kernelHeight: 1,
             weights: &weight
             )
