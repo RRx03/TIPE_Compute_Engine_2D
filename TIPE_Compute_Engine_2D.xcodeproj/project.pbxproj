@@ -17,6 +17,7 @@
 		26AE85FF2A9DEFEF0064F69F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE85F42A9DEFEF0064F69F /* ContentView.swift */; };
 		26AE86002A9DEFEF0064F69F /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE85F62A9DEFEF0064F69F /* Renderer.swift */; };
 		26AE86012A9DEFEF0064F69F /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE85F82A9DEFEF0064F69F /* Protocols.swift */; };
+		26AE86032A9E2B730064F69F /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AE86022A9E2B730064F69F /* Process.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		26AE85F42A9DEFEF0064F69F /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		26AE85F62A9DEFEF0064F69F /* Renderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		26AE85F82A9DEFEF0064F69F /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		26AE86022A9E2B730064F69F /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				26AE85F62A9DEFEF0064F69F /* Renderer.swift */,
+				26AE86022A9E2B730064F69F /* Process.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				26AE85FF2A9DEFEF0064F69F /* ContentView.swift in Sources */,
 				26AE86012A9DEFEF0064F69F /* Protocols.swift in Sources */,
 				26AE85DA2A9DEFA00064F69F /* TIPE_Compute_Engine_2DApp.swift in Sources */,
+				26AE86032A9E2B730064F69F /* Process.swift in Sources */,
 				26AE85FC2A9DEFEF0064F69F /* Shader.metal in Sources */,
 				26AE86002A9DEFEF0064F69F /* Renderer.swift in Sources */,
 				26AE85FB2A9DEFEF0064F69F /* Maths.swift in Sources */,
