@@ -6,7 +6,7 @@ class Renderer: NSObject {
     static var library: MTLLibrary!
     static var commandQueue: MTLCommandQueue!
     
-    var uniforms = Uniforms(randomSeed: UInt32.random(in: 0 ... 100000), deltaTime: 0, time: 0)
+    var uniforms = Uniforms(randomSeed: UInt32.random(in: 0 ... 100000), deltaTime: 0, time: 0, cellCount: SIMD2<Int32>(commonVariables.cellCount.x, commonVariables.cellCount.y))
     
     var randomState: [UInt32] = [0, 0, 0, 0, 0]
     var randomStateBuffer: MTLBuffer!

@@ -14,7 +14,14 @@ typedef struct {
     uint randomSeed;
     float deltaTime;
     float time;
+    simd_int2 cellCount;
 } Uniforms;
 
+typedef struct {
+    float density;
+    simd_float2 velocityField;
+    uint random;
+    uint randomID;
+} Cell;
 
 #endif /* Common_h */

@@ -25,32 +25,20 @@ float noise(uint2 position, device uint *state, float2 textureSize, uint2 cellCo
     float2 normalizedId = float2(position.x / textureSize.x, position.y / textureSize.y);
     uint2 CellID = uint2(floor(normalizedId * float2(cellCount)));
     float2 innerCellID = fract(normalizedId * float2(cellCount));
-
-    float timeSlice = fract(time);
-    int timeOffset = floor(time);
-
-    float2 gradientVectors[8];
-    float2 distanceVectors[8];
-    float influenceValues[8];
+    
+    float2 gradientVectors[4];
+    float2 distanceVectors[4];
+    float influenceValues[4];
 
     for (int i = 0; i < 4; i++)
     {
         uint2 relativeCoordinate;
         switch (i)
         {
-
-        case 0:
-            relativeCoordinate = uint2(0, 0);
-            break;
-        case 1:
-            relativeCoordinate = uint2(1, 0);
-            break;
-        case 2:
-            relativeCoordinate = uint2(0, 1);
-            break;
-        case 3:
-            relativeCoordinate = uint2(1, 1);
-            break;
+        case 0: relativeCoordinate = uint2(0, 0); break;
+        case 1: relativeCoordinate = uint2(1, 0); break;
+        case 2: relativeCoordinate = uint2(0, 1); break;
+        case 3: relativeCoordinate = uint2(1, 1); break;
         }
         uint2 newPosition = CellID + relativeCoordinate;
         float2 distanceVector = innerCellID - float2(relativeCoordinate);
