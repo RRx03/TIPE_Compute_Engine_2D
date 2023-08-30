@@ -8,7 +8,7 @@ using namespace metal;
 #define PI (3.1415)
 
 
-#define velocityMag (0)
+#define velocityMag (1)
 #define diff (1)
 #define smokePatchCount (10)
 #define velocityPatch (2)
@@ -93,7 +93,7 @@ kernel void init_Cells(device Cell *cells [[buffer(1)]],
     device uint *stateID = &cells[id].randomID;
     *stateID = *state;
     *state = id;
-
+    
 }
 
 kernel void init_Pixels(texture2d<half, access::write> textureBufferOut [[texture(3)]],
@@ -104,6 +104,7 @@ kernel void init_Pixels(texture2d<half, access::write> textureBufferOut [[textur
 {
     
 #define id(i, j) (i + uniforms.cellCount.x * (j))
+#define idTwo(i) (i.x + uniforms.cellCount.x * (i.y))
 
 
 
@@ -113,15 +114,15 @@ kernel void init_Pixels(texture2d<half, access::write> textureBufferOut [[textur
     float2 innerCellID = fract(normalizedId * float2(uniforms.cellCount));
     Cell cell = cells[id(CellID.x, CellID.y)];
     device uint *state = &cells[id(CellID.x, CellID.y)].random;
+    *state = idTwo(CellID);
     device uint *stateID = &cells[id(CellID.x, CellID.y)].randomID;
     cell.density = 0;
-    cell.velocityField = float2(1, 1);
     
-    if(CellID.x%(int(uniforms.cellCount.x/10)) == 0 && CellID.y%(int(uniforms.cellCount.y/10)) == 0){
-        cell.density = 1;
-        
-    }
+    float angleValue = noise(textureID, state, float2(uniforms.cellCount), uint2(velocityPatch))*twoPI*2;
+    cell.velocityField = float2(cos(angleValue), sin(angleValue));
+    
 
+    
     uint stateSave = *state;
     uint stateIDSave = *stateID;
     cells[id(CellID.x, CellID.y)] = cell;
@@ -229,17 +230,8 @@ kernel void main_kernel(texture2d<half, access::read> textureIn [[texture(1)]],
     
     
     
-    
-    
-
-    
-    
-    
-    
-    if(CellID.x%(int(uniforms.cellCount.x/10)) == 0 && CellID.y%(int(uniforms.cellCount.y/10)) == 0){
-        cell.density = 1;
-    }
     textureOut.write(half4(cell.density), textureID);
+//    textureOut.write(half4(cell.velocityField.x, cell.velocityField.y, 0, 1), textureID);
     uint stateSave = *state;
     uint stateIDSave = *stateID;
     cells[id(CellID.x, CellID.y)] = cell;
