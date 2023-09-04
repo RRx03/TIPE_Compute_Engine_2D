@@ -215,9 +215,11 @@ kernel void main_kernel(texture2d<half, access::read> textureIn [[texture(1)]],
     }
     cell.density = (cell.density+diff*uniforms.deltaTime*(Neighboors[0].density+Neighboors[1].density+Neighboors[2].density+Neighboors[3].density))/(1+4*diff*uniforms.deltaTime);
     
-    
-    
-    
+    if(CellID.x%100 == 0 && CellID.y%100 == 0){
+        cell.density = 1;
+        
+    }
+
     textureOut.write(half4(cell.density), textureID);
 //    textureOut.write(half4(cell.velocityField.x, cell.velocityField.y, 0, 1), textureID);
     uint stateSave = *state;
